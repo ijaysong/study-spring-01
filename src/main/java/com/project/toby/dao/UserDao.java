@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.project.toby.domain.User;
 
@@ -14,10 +15,8 @@ public class UserDao {
 	 * @param user 사용자 정보
 	 * @throws Exception
 	 */
-	public void add(User user) throws Exception {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false"
-				, "ejsong", "1qaz2wsx");
+	public void add(User user) throws ClassNotFoundException, SQLException {
+		Connection c = getConnection();
 		
 		PreparedStatement ps = c.prepareStatement(
 				"INSERT INTO USER (ID, NAME, PASSWORD) VALUES (?, ?, ?)");
@@ -37,10 +36,8 @@ public class UserDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public User get(String id) throws Exception {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false"
-				, "ejsong", "1qaz2wsx");
+	public User get(String id) throws ClassNotFoundException, SQLException {
+		Connection c = getConnection();
 		
 		PreparedStatement ps = c.prepareStatement(
 				"SELECT * FROM USER WHERE id = ?");
@@ -58,5 +55,19 @@ public class UserDao {
 		c.close();
 		
 		return user;
+	}
+	
+	/**
+	 * 연결 취득
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	private Connection getConnection() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false"
+				, "ejsong", "1qaz2wsx");
+		
+		return c;
 	}
 }
