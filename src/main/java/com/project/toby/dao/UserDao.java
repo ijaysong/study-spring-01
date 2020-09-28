@@ -1,14 +1,13 @@
 package com.project.toby.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.project.toby.domain.User;
 
-public class UserDao {
+public abstract class UserDao {
 	
 	/**
 	 * 사용자 정보 등록
@@ -57,17 +56,26 @@ public class UserDao {
 		return user;
 	}
 	
+	// 리팩토링 : 기능이 추가되거나 바뀐 것은 없지만, 이전보다 훨씬 깔끔해지고 미래의 변화에 좀 더 쉽게 대응할 수 있는 코드를 만드는 것
+	// 메소드 추출 : 공통의 기능을 담당하는 메소드로 중복된 코드를 뽑아내는 것
+	// 템플릿 메소드 패턴 : 슈퍼 클래스테서 기본적인 로직의 흐름(커넥션 가져오기, 등록, 조회 등)을 만들고, 그 기능의 일부를 추상메소드나 오버라이딩이 가능한 protected 메소드 등으로 
+	//                 만들 뒤 서브 크래스에서 이런 메소드를 필요에 맞게 구현해서 사용하도록 하는 방법을 말한다. 디자인 패턴의 일부
+	
 	/**
 	 * 연결 취득
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
+	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+	
+	/*
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false"
 				, "ejsong", "1qaz2wsx");
 		
 		return c;
-	}
+	} 
+	*/
 }
