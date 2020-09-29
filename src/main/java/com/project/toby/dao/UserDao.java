@@ -7,7 +7,13 @@ import java.sql.SQLException;
 
 import com.project.toby.domain.User;
 
-public abstract class UserDao {
+public class UserDao {
+	
+	private SimpleConnectionMaker simpleConnectionMaker;
+	
+	public UserDao() {
+		simpleConnectionMaker = new SimpleConnectionMaker();
+	}
 	
 	/**
 	 * 사용자 정보 등록
@@ -15,7 +21,7 @@ public abstract class UserDao {
 	 * @throws Exception
 	 */
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection c = getConnection();
+		Connection c = simpleConnectionMaker.makeNewConnection();
 		
 		PreparedStatement ps = c.prepareStatement(
 				"INSERT INTO USER (ID, NAME, PASSWORD) VALUES (?, ?, ?)");
@@ -36,7 +42,7 @@ public abstract class UserDao {
 	 * @throws Exception
 	 */
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Connection c = getConnection();
+		Connection c = simpleConnectionMaker.makeNewConnection();
 		
 		PreparedStatement ps = c.prepareStatement(
 				"SELECT * FROM USER WHERE id = ?");
@@ -67,7 +73,7 @@ public abstract class UserDao {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+	//public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 	
 	/*
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
