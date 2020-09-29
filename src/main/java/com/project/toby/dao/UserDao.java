@@ -9,10 +9,10 @@ import com.project.toby.domain.User;
 
 public class UserDao {
 	
-	private SimpleConnectionMaker simpleConnectionMaker;
+	private ConnectionMaker connectionMaker; // 인터페이스를 통해 오브젝트에 접근하므로 구체적인 클래스 정보를 알 필요가 없다.
 	
 	public UserDao() {
-		simpleConnectionMaker = new SimpleConnectionMaker();
+		connectionMaker = new DConnectionMaker(); // 클래스 이름을 지정해야 하는 한계가 있음.
 	}
 	
 	/**
@@ -21,7 +21,7 @@ public class UserDao {
 	 * @throws Exception
 	 */
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection c = simpleConnectionMaker.makeNewConnection();
+		Connection c = connectionMaker.makeConnection(); // 인터페이스에 정의된 메소드를 사용하므로 클래스가 바뀐다고 해도 메소드 이름이 변경되지 않는다.
 		
 		PreparedStatement ps = c.prepareStatement(
 				"INSERT INTO USER (ID, NAME, PASSWORD) VALUES (?, ?, ?)");
@@ -42,7 +42,7 @@ public class UserDao {
 	 * @throws Exception
 	 */
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Connection c = simpleConnectionMaker.makeNewConnection();
+		Connection c = connectionMaker.makeConnection();
 		
 		PreparedStatement ps = c.prepareStatement(
 				"SELECT * FROM USER WHERE id = ?");
