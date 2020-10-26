@@ -4,7 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 애플리케이션의 오브젝트들을 구성하고 그 관계를 정의하는 역할 수행
+ * UserDao의 생성 책임을 맡은 팩토리 클래스
+ * 팩토리란, 객체의 생성 방법을 결정하고 그렇게 만들어진 오브젝트를 돌려주는 것
  *
  */
 
