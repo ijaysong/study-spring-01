@@ -1,7 +1,6 @@
 package com.project.toby.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,18 @@ import com.project.toby.domain.User;
 
 public class UserDao {
 	
-	private SimpleConnectionMaker simpleConnectionMaker;
+	// 인터페이스를 통해 오브젝트에 접근하므로 구체적인 클래스 정보를 알 필요가 없다.
+	private ConnectionMaker connectionMaker;
 	
+	public UserDao(ConnectionMaker connectionMaker) {
+		connectionMaker = new DConnectionMaker();
+	}
+	
+	/*
 	public UserDao() {
 		simpleConnectionMaker = new SimpleConnectionMaker();
 	}
+	*/
 	
 	/**
 	 * 사용자 정보 등록
@@ -22,8 +28,9 @@ public class UserDao {
 	 * @throws Exception
 	 */
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection c = simpleConnectionMaker.makeNewConnection();
+		//Class.forName("com.mysql.cj.jdbc.Driver");
+		//Connection c = simpleConnectionMaker.makeNewConnection();
+		Connection c = connectionMaker.makeConnection();
 		
 		PreparedStatement ps = c.prepareStatement("INSERT INTO TOBY_DB.USER(ID, NAME, PASSWORD) VALUES (?, ?, ?)");
 		ps.setString(1, user.getId());
@@ -43,8 +50,9 @@ public class UserDao {
 	 * @throws Exception
 	 */
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection c = simpleConnectionMaker.makeNewConnection();
+		//Class.forName("com.mysql.cj.jdbc.Driver");
+		//Connection c = simpleConnectionMaker.makeNewConnection();
+		Connection c = connectionMaker.makeConnection();
 		
 		PreparedStatement ps = c.prepareStatement("SELECT * FROM TOBY_DB.USER WHERE ID = ?");
 		ps.setString(1, id);
