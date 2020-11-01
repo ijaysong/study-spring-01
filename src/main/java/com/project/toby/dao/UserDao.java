@@ -13,7 +13,8 @@ public class UserDao {
 	private ConnectionMaker connectionMaker;
 	
 	public UserDao(ConnectionMaker connectionMaker) {
-		connectionMaker = new DConnectionMaker();
+		//connectionMaker = new DConnectionMaker();
+		this.connectionMaker = connectionMaker;
 	}
 	
 	/*
