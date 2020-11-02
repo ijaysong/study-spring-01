@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.project.toby.dao.ConnectionMaker;
 import com.project.toby.dao.DConnectionMaker;
+import com.project.toby.dao.DaoFactory;
 import com.project.toby.dao.UserDao;
 import com.project.toby.domain.User;
 
@@ -20,7 +21,8 @@ public class UserDaoTest {
 		ConnectionMaker connectionMaker = new DConnectionMaker(); 
 		// ConnectionMaker connectionMaker = new NConnectionMaker(); 
 		
-		UserDao dao = new UserDao(connectionMaker); 
+		//UserDao dao = new UserDao(connectionMaker); 
+		UserDao dao = new DaoFactory().userDao();
 		
 		User user = new User();
 		user.setId("hongkd");
