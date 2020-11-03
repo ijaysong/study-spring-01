@@ -12,6 +12,8 @@ public class UserDao {
 	// 인터페이스를 통해 오브젝트에 접근하므로 구체적인 클래스 정보를 알 필요가 없다.
 	private ConnectionMaker connectionMaker;
 	
+	private static UserDao INSTANCE;
+	
 	public UserDao(ConnectionMaker connectionMaker) {
 		//connectionMaker = new DConnectionMaker();
 		this.connectionMaker = connectionMaker;
@@ -91,4 +93,9 @@ public class UserDao {
 		return c;
 	} 
 	*/
+	
+	public static synchronized UserDao getInstance(ConnectionMaker connectionMaker) {
+		if(INSTANCE == null) INSTANCE = new UserDao(connectionMaker);
+		return INSTANCE;
+	}
 }
