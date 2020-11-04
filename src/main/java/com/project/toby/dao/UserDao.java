@@ -18,17 +18,17 @@ public class UserDao {
 	
 	//private static UserDao INSTANCE;
 	
+	/*
 	public UserDao() {
 		DaoFactory daoFactory = new DaoFactory();
 		this.connectionMaker = daoFactory.connectionMaker();
 	}
+	*/
 	
-	/*
 	public UserDao(ConnectionMaker connectionMaker) {
 		//connectionMaker = new DConnectionMaker();
 		this.connectionMaker = connectionMaker;
 	}
-	*/
 	
 	/*
 	public UserDao() {
