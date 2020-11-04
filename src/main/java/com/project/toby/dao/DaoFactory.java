@@ -33,10 +33,12 @@ public class DaoFactory {
 		return userDao;
 	}*/
 	
+	/*
 	@Bean
 	public UserDao userDao() {
 		return new UserDao(connectionMaker());
 	}
+	*/
 	
 	/*
 	public AccountDao accontDao() {
