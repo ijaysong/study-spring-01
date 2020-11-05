@@ -25,10 +25,12 @@ public class UserDao {
 	}
 	*/
 	
+	/*
 	public UserDao(ConnectionMaker connectionMaker) {
 		//connectionMaker = new DConnectionMaker();
 		this.connectionMaker = connectionMaker;
 	}
+	*/
 	
 	/*
 	public UserDao() {
