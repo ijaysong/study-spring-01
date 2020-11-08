@@ -1,7 +1,10 @@
 package com.project.toby.dao;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 /**
  * UserDao의 생성 책임을 맡은 팩토리 클래스
@@ -34,10 +37,20 @@ public class DaoFactory {
 	}
 	*/
 	
+	/*
 	@Bean
 	public UserDao userDao() {
 		UserDao userDao = new UserDao();
 		userDao.setConnectionMaker(connectionMaker());
+		return userDao;
+	}
+	*/
+	
+	@Bean
+	public UserDao userDao() {
+		UserDao userDao = new UserDao();
+		userDao.setDataSource(dataSource());
+		
 		return userDao;
 	}
 	
@@ -66,4 +79,16 @@ public class DaoFactory {
 		return new DConnectionMaker(); // 분리해서 중복을 제거한 ConnectionMaker 타입 오브젝트 생성 코드
 	}
 
+	@Bean
+	public DataSource dataSource() {
+		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+		
+		dataSource.setDriverClass(com.mysql.cj.jdbc.Driver.class);
+		dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false");
+		dataSource.setUsername("ejsong");
+		dataSource.setPassword("1qaz2wsx");
+		
+		return dataSource;
+	}
+	
 }

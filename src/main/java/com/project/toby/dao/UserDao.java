@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import com.project.toby.domain.User;
 
 public class UserDao {
@@ -15,6 +17,8 @@ public class UserDao {
 	private Connection c;
 	
 	private User user;
+	
+	private DataSource dataSource;
 	
 	//private static UserDao INSTANCE;
 	
@@ -46,7 +50,8 @@ public class UserDao {
 	public void add(User user) throws ClassNotFoundException, SQLException {
 		//Class.forName("com.mysql.cj.jdbc.Driver");
 		//Connection c = simpleConnectionMaker.makeNewConnection();
-		Connection c = connectionMaker.makeConnection();
+		//Connection c = connectionMaker.makeConnection();
+		Connection c = dataSource.getConnection();
 		
 		PreparedStatement ps = c.prepareStatement("INSERT INTO TOBY_DB.USER(ID, NAME, PASSWORD) VALUES (?, ?, ?)");
 		ps.setString(1, user.getId());
@@ -117,4 +122,9 @@ public class UserDao {
 		return INSTANCE;
 	}
 	*/
+	
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	
 }
