@@ -5,10 +5,14 @@
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="connectionMaker" class="com.project.toby.dao.ConnectionMaker" />
 	
-	<!-- 
-	<bean id="userDao" class="com.project.toby.dao.UserDao">
-	-->
 	<bean id="dataSource" class="org.springframework.jdbc.dataSource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/dev_db?serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false" />
+		<property name="username" value="ejsong" />
+		<property name="password" value="1qaz2wsx" />
+	</bean>
+	
+	<bean id="userDao" class="com.project.toby.dao.UserDao">
 		<property name="connectionMaker" ref="connectionMaker" />
 	</bean>
 
