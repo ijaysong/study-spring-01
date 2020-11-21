@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.sql.SQLException;
 
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -54,6 +55,10 @@ public class UserDaoTest {
 //			System.out.println("조회 테스트 성공");
 //		}
 //	}
+	
+	public static void main(String[] args) {
+		JUnitCore.main("com.project.toby.test.UserDaoTest");
+	}
 	
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
