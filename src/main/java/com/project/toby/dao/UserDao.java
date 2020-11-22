@@ -127,4 +127,31 @@ public class UserDao {
 		this.dataSource = dataSource;
 	}
 	
+	public void deleteAll() throws SQLException {
+		Connection c = dataSource.getConnection();
+		
+		PreparedStatement ps = c.prepareStatement("DELETE FROM TOBY_DB.USER");
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		c.close();
+	}
+	
+	public int getCount() throws SQLException {
+		Connection c = dataSource.getConnection();
+		
+		PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM TOBY_DB.USER");
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		rs.close();
+		ps.close();
+		c.close();
+		
+		return count;
+	}
+	
 }
