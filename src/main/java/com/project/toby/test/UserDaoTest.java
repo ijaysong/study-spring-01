@@ -64,22 +64,23 @@ public class UserDaoTest {
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
 		UserDao dao = context.getBean("userDao", UserDao.class);
+		User user1 = new User("hongkd", "홍길동", "1234");
+		User user2 = new User("kimcs", "김철수", "5678");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 		
-		User user = new User();
-		user.setId("kimcs");
-		user.setName("김철수");
-		user.setPassword("5678");
+		dao.add(user1);
+		dao.add(user2);
+		assertThat(dao.getCount(), is(2));
 		
-		dao.add(user);
-		assertThat(dao.getCount(), is(1));
+		User userget1 = dao.get(user1.getId());
+		assertThat(userget1.getName(), is(userget1.getName()));
+		assertThat(userget1.getPassword(), is(userget1.getPassword()));
 		
-		User user2 = dao.get(user.getId());
-		
-		assertThat(user.getName(), is(user2.getName()));
-		assertThat(user.getPassword(), is(user2.getPassword()));
+		User userget2 = dao.get(user2.getId());
+		assertThat(userget2.getName(), is(userget2.getName()));
+		assertThat(userget2.getPassword(), is(userget2.getPassword()));
 	}
 	
 	@Test
