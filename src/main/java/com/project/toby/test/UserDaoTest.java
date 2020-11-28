@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.springframework.context.ApplicationContext;
@@ -57,14 +58,21 @@ public class UserDaoTest {
 //		}
 //	}
 	
+	private UserDao dao;
+	
 	public static void main(String[] args) {
 		JUnitCore.main("com.project.toby.test.UserDaoTest");
 	}
 	
+	@Before
+	public void setUp() {
+		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
+		this.dao = context.getBean("userDao", UserDao.class);
+	}
+	
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
-		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
-		UserDao dao = context.getBean("userDao", UserDao.class);
+		setUp();
 		User user1 = new User("hongkd", "홍길동", "1234");
 		User user2 = new User("kimcs", "김철수", "5678");
 		
@@ -86,9 +94,7 @@ public class UserDaoTest {
 	
 	@Test
 	public void count() throws SQLException, ClassNotFoundException {
-		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
-		
-		UserDao dao = context.getBean("userDao", UserDao.class);
+		setUp();
 		User user1 = new User("hongkd", "홍길동", "1234");
 		User user2 = new User("kimcs", "김철수", "5678");
 		User user3 = new User("kimyh", "김영희", "9012");
@@ -109,9 +115,7 @@ public class UserDaoTest {
 	// 테스트 중에 발생할 것으로 기대되는 예외 클래스를 지정해준다.
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void getUserFailure() throws SQLException, ClassNotFoundException {
-		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-		
-		UserDao dao = context.getBean("userDao", UserDao.class);
+		setUp();
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 		
