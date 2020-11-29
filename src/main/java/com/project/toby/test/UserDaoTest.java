@@ -59,6 +59,9 @@ public class UserDaoTest {
 //	}
 	
 	private UserDao dao;
+	private User user1;
+	private User user2;
+	private User user3;
 	
 	public static void main(String[] args) {
 		JUnitCore.main("com.project.toby.test.UserDaoTest");
@@ -68,13 +71,15 @@ public class UserDaoTest {
 	public void setUp() {
 		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
 		this.dao = context.getBean("userDao", UserDao.class);
+		
+		this.user1 = new User("hongkd", "홍길동", "1234");
+		this.user2 = new User("kimcs", "김철수", "5678");
+		this.user3 = new User("kimyh", "김영희", "9012");
 	}
 	
 	@Test
 	public void addAndGet() throws SQLException, ClassNotFoundException {
 		setUp();
-		User user1 = new User("hongkd", "홍길동", "1234");
-		User user2 = new User("kimcs", "김철수", "5678");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
@@ -95,9 +100,6 @@ public class UserDaoTest {
 	@Test
 	public void count() throws SQLException, ClassNotFoundException {
 		setUp();
-		User user1 = new User("hongkd", "홍길동", "1234");
-		User user2 = new User("kimcs", "김철수", "5678");
-		User user3 = new User("kimyh", "김영희", "9012");
 		
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
