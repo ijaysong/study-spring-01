@@ -1,20 +1,22 @@
 package com.project.toby.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.sql.SQLException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.project.toby.dao.UserDao;
 import com.project.toby.domain.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="/com/project/toby/application.xml")
 public class UserDaoTest {
 
 //	public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -58,6 +60,9 @@ public class UserDaoTest {
 //		}
 //	}
 	
+	@Autowired
+	private ApplicationContext context;
+	
 	private UserDao dao;
 	private User user1;
 	private User user2;
@@ -69,8 +74,8 @@ public class UserDaoTest {
 	
 	@Before
 	public void setUp() {
-		ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
-		this.dao = context.getBean("userDao", UserDao.class);
+		//ApplicationContext context = new GenericXmlApplicationContext("com/project/toby/application.xml");
+		this.dao = this.context.getBean("userDao", UserDao.class);
 		
 		this.user1 = new User("hongkd", "홍길동", "1234");
 		this.user2 = new User("kimcs", "김철수", "5678");
